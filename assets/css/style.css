@@ -1,0 +1,1588 @@
+/* =========================================
+   CONNECTZW DESIGN SYSTEM v3.0
+   IMAGE-RICH MODERN HOMEPAGE
+========================================= */
+
+
+/* =========================================
+   ROOT VARIABLES
+========================================= */
+
+:root{
+
+    --primary:#2563EB;
+    --primary-dark:#1D4ED8;
+    --primary-light:#EFF6FF;
+
+    --success:#16A34A;
+    --danger:#DC2626;
+
+    --dark:#111827;
+    --dark-2:#1F2937;
+
+    --text:#1F2937;
+    --muted:#6B7280;
+
+    --light:#F8FAFC;
+    --white:#FFFFFF;
+
+    --border:#E5E7EB;
+
+    --shadow:0 8px 30px rgba(15,23,42,.08);
+    --shadow-hover:0 18px 45px rgba(15,23,42,.16);
+
+    --radius:16px;
+    --radius-large:24px;
+
+}
+
+
+/* =========================================
+   GLOBAL RESET
+========================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:'Poppins',Arial,sans-serif;
+    background:var(--light);
+    color:var(--text);
+    line-height:1.6;
+}
+
+a{
+    text-decoration:none;
+}
+
+img{
+    max-width:100%;
+    display:block;
+}
+
+.container{
+    width:90%;
+    max-width:1200px;
+    margin:auto;
+}
+
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+.btn,
+button{
+
+    background:var(--primary);
+    color:white;
+
+    padding:12px 25px;
+
+    border:none;
+    border-radius:9px;
+
+    cursor:pointer;
+
+    font-size:15px;
+    font-weight:600;
+
+    transition:.3s ease;
+}
+
+.btn:hover,
+button:hover{
+
+    background:var(--primary-dark);
+    transform:translateY(-2px);
+
+}
+
+.btn-primary{
+
+    display:inline-block;
+
+    background:var(--primary);
+    color:white;
+
+    padding:13px 25px;
+
+    border-radius:9px;
+
+    font-weight:600;
+
+    transition:.3s ease;
+}
+
+.btn-primary:hover{
+
+    background:var(--primary-dark);
+
+    transform:translateY(-3px);
+
+    box-shadow:0 10px 25px rgba(37,99,235,.25);
+}
+
+
+/* =========================================
+   NAVBAR
+========================================= */
+
+.navbar{
+
+    background:rgba(255,255,255,.97);
+
+    backdrop-filter:blur(12px);
+
+    box-shadow:0 2px 15px rgba(0,0,0,.06);
+
+    position:sticky;
+
+    top:0;
+
+    z-index:1000;
+}
+
+.nav-container{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:16px 40px;
+}
+
+.nav-brand a{
+
+    font-size:27px;
+
+    font-weight:800;
+
+    color:var(--primary);
+}
+
+.nav-links{
+
+    display:flex;
+
+    gap:25px;
+
+    align-items:center;
+}
+
+.nav-links a{
+
+    color:var(--text);
+
+    font-weight:500;
+
+    transition:.3s;
+}
+
+.nav-links a:hover{
+
+    color:var(--primary);
+}
+
+.register-btn{
+
+    background:var(--primary);
+
+    color:white !important;
+
+    padding:10px 20px;
+
+    border-radius:25px;
+
+    transition:.3s;
+}
+
+.register-btn:hover{
+
+    background:var(--primary-dark);
+
+    transform:translateY(-2px);
+}
+
+
+/* =========================================
+   HERO
+========================================= */
+
+.hero{
+
+    min-height:650px;
+
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+
+    color:white;
+
+    overflow:hidden;
+
+    background-image:
+        linear-gradient(
+            90deg,
+            rgba(3,15,35,.92) 0%,
+            rgba(3,15,35,.78) 45%,
+            rgba(3,15,35,.38) 100%
+        ),
+        url('../images/category-default.jpg');
+
+    background-size:cover;
+
+    background-position:center;
+}
+
+.hero::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:linear-gradient(
+        to top,
+        rgba(3,15,35,.25),
+        transparent
+    );
+
+    pointer-events:none;
+}
+
+.hero .container{
+
+    position:relative;
+
+    z-index:2;
+}
+
+.hero-content{
+
+    max-width:760px;
+
+    padding:90px 0;
+}
+
+.hero-text{
+
+    max-width:720px;
+}
+
+.hero-badge{
+
+    display:inline-block;
+
+    color:#DBEAFE;
+
+    background:rgba(37,99,235,.22);
+
+    border:1px solid rgba(147,197,253,.35);
+
+    padding:8px 15px;
+
+    border-radius:30px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    margin-bottom:22px;
+
+    backdrop-filter:blur(5px);
+}
+
+.hero h1{
+
+    font-size:58px;
+
+    line-height:1.12;
+
+    color:white;
+
+    margin-bottom:24px;
+
+    font-weight:800;
+
+    letter-spacing:-1px;
+}
+
+.hero h1 span{
+
+    color:#60A5FA;
+}
+
+.hero p{
+
+    color:#E5E7EB;
+
+    font-size:18px;
+
+    max-width:650px;
+
+    margin-bottom:30px;
+}
+
+
+/* =========================================
+   HERO SEARCH
+========================================= */
+
+.hero-search{
+
+    display:flex;
+
+    max-width:700px;
+
+    gap:8px;
+
+    padding:8px;
+
+    background:white;
+
+    border-radius:14px;
+
+    box-shadow:0 18px 45px rgba(0,0,0,.25);
+
+    margin-top:20px;
+}
+
+.hero-search input{
+
+    flex:1;
+
+    min-width:0;
+
+    border:none;
+
+    outline:none;
+
+    padding:15px 17px;
+
+    font-size:15px;
+
+    background:white;
+
+    color:var(--text);
+}
+
+.hero-search input:focus{
+
+    border:none;
+
+    box-shadow:none;
+}
+
+.hero-search button{
+
+    padding:14px 27px;
+
+    border-radius:10px;
+
+    white-space:nowrap;
+}
+
+.hero-links{
+
+    display:flex;
+
+    gap:28px;
+
+    margin-top:25px;
+}
+
+.hero-links a{
+
+    color:white;
+
+    font-weight:600;
+
+    border-bottom:2px solid #60A5FA;
+
+    padding-bottom:4px;
+
+    transition:.3s;
+}
+
+.hero-links a:hover{
+
+    color:#93C5FD;
+
+    border-color:white;
+}
+
+
+/* =========================================
+   STATISTICS
+========================================= */
+
+.stats-section{
+
+    padding:45px 20px;
+
+    background:white;
+
+    position:relative;
+
+    z-index:3;
+}
+
+.stats-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:20px;
+}
+
+.stat-card{
+
+    background:white;
+
+    padding:28px 20px;
+
+    text-align:center;
+
+    border-radius:var(--radius);
+
+    box-shadow:var(--shadow);
+
+    border:1px solid var(--border);
+
+    transition:.3s ease;
+}
+
+.stat-card:hover{
+
+    transform:translateY(-7px);
+
+    box-shadow:var(--shadow-hover);
+}
+
+.stat-card h2{
+
+    color:var(--primary);
+
+    font-size:38px;
+
+    font-weight:800;
+
+    line-height:1.2;
+
+    margin-bottom:4px;
+}
+
+.stat-card p{
+
+    color:var(--muted);
+
+    font-weight:500;
+}
+
+
+/* =========================================
+   SECTION HEADINGS
+========================================= */
+
+.section-heading{
+
+    text-align:center;
+
+    max-width:700px;
+
+    margin:0 auto 45px;
+}
+
+.section-label{
+
+    display:inline-block;
+
+    color:var(--primary);
+
+    font-size:13px;
+
+    font-weight:800;
+
+    letter-spacing:2px;
+
+    margin-bottom:5px;
+}
+
+.section-heading h2{
+
+    font-size:38px;
+
+    color:var(--dark);
+
+    margin:8px 0 12px;
+
+    line-height:1.2;
+}
+
+.section-heading p{
+
+    color:var(--muted);
+
+    font-size:16px;
+}
+
+
+/* =========================================
+   CATEGORIES
+========================================= */
+
+.categories-section{
+
+    padding:90px 20px;
+
+    background:#F8FAFC;
+}
+
+.category-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:25px;
+}
+
+
+/*
+   IMPORTANT:
+   This matches the HTML class
+   .category-card
+*/
+
+.category-card{
+
+    display:block;
+
+    background:white;
+
+    padding:0;
+
+    border-radius:var(--radius-large);
+
+    overflow:hidden;
+
+    box-shadow:var(--shadow);
+
+    border:1px solid var(--border);
+
+    transition:.35s ease;
+
+    color:var(--text);
+}
+
+.category-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:var(--shadow-hover);
+}
+
+.category-image{
+
+    width:100%;
+
+    height:190px;
+
+    overflow:hidden;
+
+    position:relative;
+
+    background:#E5E7EB;
+}
+
+.category-image::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:linear-gradient(
+        to top,
+        rgba(0,0,0,.18),
+        transparent 45%
+    );
+
+    pointer-events:none;
+}
+
+.category-image img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+    object-position:center;
+
+    transition:transform .5s ease;
+}
+
+.category-card:hover .category-image img{
+
+    transform:scale(1.07);
+}
+
+.category-content{
+
+    padding:20px 22px;
+
+    background:white;
+}
+
+.category-content h3{
+
+    color:var(--dark);
+
+    font-size:19px;
+
+    font-weight:700;
+
+    margin:0;
+
+}
+
+
+/* =========================================
+   DISCOVER CONNECTZW
+========================================= */
+
+.discover-section{
+
+    padding:90px 20px;
+
+    background:white;
+}
+
+.discover-content{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:55px;
+
+    align-items:center;
+}
+
+.discover-text{
+
+    max-width:570px;
+}
+
+.discover-text .section-label{
+
+    margin-bottom:10px;
+}
+
+.discover-text h2{
+
+    font-size:43px;
+
+    line-height:1.15;
+
+    color:var(--dark);
+
+    margin:10px 0 20px;
+}
+
+.discover-text p{
+
+    color:var(--muted);
+
+    font-size:17px;
+
+    margin-bottom:28px;
+}
+
+.discover-image{
+
+    height:390px;
+
+    border-radius:var(--radius-large);
+
+    overflow:hidden;
+
+    box-shadow:var(--shadow-hover);
+
+    position:relative;
+}
+
+.discover-image::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:linear-gradient(
+        to top,
+        rgba(0,0,0,.18),
+        transparent
+    );
+
+    pointer-events:none;
+}
+
+.discover-image img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+    object-position:center;
+}
+
+
+/* =========================================
+   LATEST BUSINESSES
+========================================= */
+
+.businesses-section{
+
+    padding:90px 20px;
+
+    background:#F8FAFC;
+}
+
+.business-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:28px;
+}
+
+.business-card{
+
+    background:white;
+
+    padding:0;
+
+    border-radius:var(--radius-large);
+
+    overflow:hidden;
+
+    box-shadow:var(--shadow);
+
+    border:1px solid var(--border);
+
+    transition:.35s ease;
+}
+
+.business-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:var(--shadow-hover);
+}
+
+.business-image{
+
+    height:230px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:#E5E7EB;
+}
+
+.business-image img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+    object-position:center;
+
+    transition:transform .5s ease;
+}
+
+.business-card:hover .business-image img{
+
+    transform:scale(1.06);
+}
+
+.business-content{
+
+    padding:22px;
+}
+
+.business-category{
+
+    display:inline-block;
+
+    background:#EFF6FF;
+
+    color:var(--primary);
+
+    padding:5px 11px;
+
+    border-radius:20px;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    margin-bottom:10px;
+}
+
+.business-content h3{
+
+    color:var(--dark);
+
+    font-size:20px;
+
+    margin-bottom:8px;
+}
+
+.business-content p{
+
+    color:var(--muted);
+
+    font-size:14px;
+
+    margin-bottom:15px;
+}
+
+.business-content a{
+
+    color:var(--primary);
+
+    font-weight:700;
+
+    font-size:14px;
+
+    transition:.3s;
+}
+
+.business-content a:hover{
+
+    color:var(--primary-dark);
+}
+
+.section-button{
+
+    text-align:center;
+
+    margin-top:45px;
+}
+
+
+/* =========================================
+   WHY CONNECTZW
+========================================= */
+
+.why-section{
+
+    padding:90px 20px;
+
+    background:white;
+}
+
+.why-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:28px;
+}
+
+.why-card{
+
+    background:white;
+
+    border-radius:var(--radius-large);
+
+    overflow:hidden;
+
+    box-shadow:var(--shadow);
+
+    border:1px solid var(--border);
+
+    transition:.35s ease;
+}
+
+.why-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:var(--shadow-hover);
+}
+
+.why-image{
+
+    width:100%;
+
+    height:220px;
+
+    overflow:hidden;
+
+    background:#E5E7EB;
+}
+
+.why-image img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+    object-position:center;
+
+    transition:transform .5s ease;
+}
+
+.why-card:hover .why-image img{
+
+    transform:scale(1.06);
+}
+
+.why-content{
+
+    padding:25px;
+}
+
+.why-content h3{
+
+    font-size:20px;
+
+    margin-bottom:10px;
+
+    color:var(--dark);
+}
+
+.why-content p{
+
+    color:var(--muted);
+
+    font-size:14px;
+}
+
+
+/* =========================================
+   HOW CONNECTZW WORKS
+========================================= */
+
+.how-section{
+
+    padding:90px 20px;
+
+    background:#F8FAFC;
+}
+
+.steps-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:30px;
+}
+
+.step-card{
+
+    text-align:center;
+
+    padding:35px 25px;
+
+    background:white;
+
+    border-radius:var(--radius-large);
+
+    border:1px solid var(--border);
+
+    transition:.3s;
+}
+
+.step-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:var(--shadow);
+}
+
+.step-number{
+
+    width:65px;
+
+    height:65px;
+
+    margin:0 auto 20px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border-radius:50%;
+
+    background:var(--primary);
+
+    color:white;
+
+    font-size:20px;
+
+    font-weight:800;
+
+    box-shadow:0 8px 20px rgba(37,99,235,.25);
+}
+
+.step-card h3{
+
+    color:var(--dark);
+
+    font-size:21px;
+
+    margin-bottom:8px;
+}
+
+.step-card p{
+
+    color:var(--muted);
+
+    font-size:14px;
+}
+
+
+/* =========================================
+   BUSINESS CTA
+========================================= */
+
+.business-cta{
+
+    min-height:480px;
+
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+
+    overflow:hidden;
+}
+
+.cta-background{
+
+    position:absolute;
+
+    inset:0;
+
+    background-image:
+        linear-gradient(
+            90deg,
+            rgba(17,24,39,.93),
+            rgba(17,24,39,.68),
+            rgba(17,24,39,.32)
+        ),
+        url('../images/grow-business.jpg');
+
+    background-size:cover;
+
+    background-position:center;
+}
+
+.business-cta .container{
+
+    position:relative;
+
+    z-index:2;
+}
+
+.cta-content{
+
+    max-width:650px;
+
+    color:white;
+
+    padding:90px 0;
+}
+
+.cta-content h2{
+
+    font-size:45px;
+
+    line-height:1.15;
+
+    margin:12px 0 20px;
+}
+
+.cta-content p{
+
+    color:#E5E7EB;
+
+    font-size:17px;
+
+    max-width:570px;
+
+    margin-bottom:28px;
+}
+
+.cta-content .btn-primary{
+
+    background:white;
+
+    color:var(--primary);
+}
+
+.cta-content .btn-primary:hover{
+
+    background:#EFF6FF;
+
+    color:var(--primary-dark);
+}
+
+
+/* =========================================
+   GENERAL CARDS
+========================================= */
+
+.card{
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:var(--radius);
+
+    box-shadow:var(--shadow);
+
+    transition:.3s;
+}
+
+.card:hover{
+
+    transform:translateY(-5px);
+}
+
+
+/* =========================================
+   FORMS
+========================================= */
+
+input,
+textarea,
+select{
+
+    width:100%;
+
+    padding:13px;
+
+    border:1px solid #D1D5DB;
+
+    border-radius:8px;
+
+    font-family:inherit;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+
+    outline:none;
+
+    border-color:var(--primary);
+
+    box-shadow:0 0 0 3px rgba(37,99,235,.1);
+}
+
+textarea{
+
+    min-height:120px;
+}
+
+
+/* =========================================
+   SEARCH PAGE
+========================================= */
+
+.search-page{
+
+    padding:60px 20px;
+}
+
+.filter-box{
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:var(--radius);
+
+    box-shadow:var(--shadow);
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+
+    gap:15px;
+
+    margin:40px 0;
+}
+
+.no-logo{
+
+    height:180px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:60px;
+
+    background:#F1F5F9;
+
+    border-radius:10px;
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.site-footer{
+
+    background:var(--dark);
+
+    color:white;
+
+    padding:60px 40px 20px;
+}
+
+.footer-container{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+    gap:40px;
+}
+
+.footer-section a{
+
+    color:#D1D5DB;
+
+    display:block;
+
+    margin:10px 0;
+
+    transition:.3s;
+}
+
+.footer-section a:hover{
+
+    color:white;
+}
+
+.footer-bottom{
+
+    text-align:center;
+
+    margin-top:40px;
+
+    padding-top:20px;
+
+    border-top:1px solid rgba(255,255,255,.1);
+
+    color:#9CA3AF;
+}
+
+
+/* =========================================
+   MOBILE RESPONSIVE
+========================================= */
+
+@media(max-width:1000px){
+
+    .category-grid{
+
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .business-grid{
+
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .stats-grid{
+
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .why-grid{
+
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .discover-content{
+
+        gap:35px;
+    }
+
+}
+
+
+@media(max-width:768px){
+
+    .nav-container{
+
+        padding:15px 20px;
+    }
+
+    .nav-links{
+
+        gap:12px;
+
+        flex-wrap:wrap;
+
+        justify-content:center;
+    }
+
+    .hero{
+
+        min-height:620px;
+
+        background-position:center;
+    }
+
+    .hero-content{
+
+        padding:65px 0;
+    }
+
+    .hero h1{
+
+        font-size:40px;
+    }
+
+    .hero p{
+
+        font-size:16px;
+    }
+
+    .hero-search{
+
+        flex-direction:column;
+
+        padding:10px;
+    }
+
+    .hero-search input{
+
+        width:100%;
+    }
+
+    .hero-search button{
+
+        width:100%;
+    }
+
+    .hero-links{
+
+        flex-direction:column;
+
+        gap:12px;
+    }
+
+    .stats-grid{
+
+        grid-template-columns:1fr 1fr;
+    }
+
+    .category-grid{
+
+        grid-template-columns:1fr 1fr;
+    }
+
+    .business-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    .why-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    .steps-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    .discover-content{
+
+        grid-template-columns:1fr;
+    }
+
+    .discover-text h2{
+
+        font-size:34px;
+    }
+
+    .discover-image{
+
+        height:320px;
+    }
+
+    .section-heading h2{
+
+        font-size:30px;
+    }
+
+    .cta-content h2{
+
+        font-size:35px;
+    }
+
+}
+
+
+@media(max-width:500px){
+
+    .nav-container{
+
+        flex-direction:column;
+
+        gap:15px;
+    }
+
+    .nav-links{
+
+        flex-wrap:wrap;
+
+        justify-content:center;
+    }
+
+    .hero{
+
+        min-height:650px;
+
+        background-position:center;
+    }
+
+    .hero-content{
+
+        padding:55px 0;
+    }
+
+    .hero h1{
+
+        font-size:33px;
+
+        letter-spacing:-.5px;
+    }
+
+    .hero-badge{
+
+        font-size:11px;
+    }
+
+    .hero-links a{
+
+        width:max-content;
+    }
+
+    .stats-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    .category-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    .category-image{
+
+        height:210px;
+    }
+
+    .business-image{
+
+        height:220px;
+    }
+
+    .discover-image{
+
+        height:270px;
+    }
+
+    .section-heading{
+
+        margin-bottom:35px;
+    }
+
+    .section-heading h2{
+
+        font-size:28px;
+    }
+
+    .cta-content{
+
+        padding:70px 0;
+    }
+
+    .cta-content h2{
+
+        font-size:32px;
+    }
+
+}
+
+
+/* =========================================
+   IMAGE LOADING SAFETY
+========================================= */
+
+.category-image img,
+.business-image img,
+.why-image img,
+.discover-image img{
+
+    background:#E5E7EB;
+}
+
+
+/* Prevent broken/empty image areas
+   from looking like white blocks */
+
+.category-image,
+.business-image,
+.why-image,
+.discover-image{
+
+    background:#E5E7EB;
+}

@@ -1,0 +1,12 @@
+# Database configuration
+includes/config.php
+
+# Uploaded files
+uploads/*
+
+# VS Code settings
+.vscode/
+
+# Windows/macOS system files
+Thumbs.db
+.DS_Store
