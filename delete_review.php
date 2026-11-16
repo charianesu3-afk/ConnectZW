@@ -1,116 +1,19 @@
 <?php
+require_once __DIR__ . '/includes/config.php';
+require_login();
+require_post();
 
-session_start();
+$uid = (int)$_SESSION['user_id'];
+$rid = (int)($_POST['review_id'] ?? 0);
 
-include 'includes/config.php';
-
-
-
-if(!isset($_SESSION['user_id'])){
-
-
-header("Location: login.php");
-
-exit();
-
+$review = db_one('SELECT id, user_id, business_id FROM reviews WHERE id = ?', 'i', [$rid]);
+if (!$review || ((int)$review['user_id'] !== $uid && current_role() !== 'admin')) {
+    flash('error', 'Review not found or you do not have permission.');
+    redirect('index.php');
 }
 
+db_exec('DELETE FROM reviews WHERE id = ?', 'i', [$rid]);
+flash('success', 'Review deleted.');
 
-
-if(!isset($_GET['id'])){
-
-
-header("Location: index.php");
-
-exit();
-
-}
-
-
-
-$review_id=mysqli_real_escape_string(
-$conn,
-$_GET['id']
-);
-
-
-
-$user_id=$_SESSION['user_id'];
-
-
-
-
-// Get review details
-
-$review_query=mysqli_query(
-$conn,
-
-"SELECT *
-
-FROM reviews
-
-WHERE id='$review_id'
-
-AND user_id='$user_id'"
-
-);
-
-
-
-
-
-if(mysqli_num_rows($review_query)==0){
-
-
-die("Review not found or you do not have permission.");
-
-}
-
-
-
-$review=mysqli_fetch_assoc($review_query);
-
-$business_id=$review['business_id'];
-
-
-
-
-
-// Delete review
-
-
-$delete=mysqli_query(
-$conn,
-
-"DELETE FROM reviews
-
-WHERE id='$review_id'
-
-AND user_id='$user_id'"
-
-);
-
-
-
-
-
-if($delete){
-
-
-
-header("Location: business_profile.php?id=".$business_id);
-
-exit();
-
-
-
-}else{
-
-
-echo "Error deleting review.";
-
-}
-
-
-
-?>
+$next = ($_POST['next'] ?? '') === 'my_reviews' ? 'customer/my_reviews.php' : 'business_profile.php?id=' . (int)$review['business_id'];
+redirect($next);

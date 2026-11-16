@@ -1,167 +1,32 @@
 <?php
-
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
+$role = current_role();
+$here = basename($_SERVER['SCRIPT_NAME'] ?? '');
+$nav = ['index.php' => 'Home', 'categories.php' => 'Categories', 'search.php' => 'Businesses', 'about.php' => 'About Us', 'blog.php' => 'Blog', 'contact.php' => 'Contact'];
 ?>
-
 <nav class="navbar">
-
     <div class="nav-container">
+        <a class="brand" href="<?php echo e(url('index.php')); ?>"><?php echo icon('pin', 26); ?> ConnectZW</a>
 
-
-        <!-- BRAND -->
-
-        <div class="nav-brand">
-
-            <a href="/connectzw/index.php">
-                🌍 ConnectZW
-            </a>
-
-        </div>
-
-
-        <!-- MOBILE BUTTON -->
-
-        <button
-            class="menu-toggle"
-            type="button"
-            onclick="toggleMenu()"
-            aria-label="Open navigation menu"
-        >
-            ☰
-        </button>
-
-
-        <!-- LINKS -->
+        <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Open navigation menu"><?php echo icon('menu', 26); ?></button>
 
         <div class="nav-links" id="navLinks">
-
-
-            <!-- HOME -->
-
-            <a href="/connectzw/index.php">
-                Home
-            </a>
-
-
-            <!-- BUSINESSES -->
-
-            <a href="/connectzw/business/view_businesses.php">
-                Businesses
-            </a>
-
-
-            <?php if (isset($_SESSION['user_id'])): ?>
-
-
-                <!-- BUSINESS OWNER -->
-
-                <?php if (
-                    isset($_SESSION['role']) &&
-                    $_SESSION['role'] === "business"
-                ): ?>
-
-                    <a href="/connectzw/business/business_dashboard.php">
-                        🏪 My Business
-                    </a>
-
+            <div class="nav-main">
+                <?php foreach ($nav as $file => $label): ?>
+                    <a href="<?php echo e(url($file)); ?>" class="<?php echo $here === $file ? 'active' : ''; ?>"><?php echo e($label); ?></a>
+                <?php endforeach; ?>
+            </div>
+            <div class="nav-user">
+                <?php if (is_logged_in()): ?>
+                    <?php if ($role === 'customer'): ?><a href="<?php echo e(url('customer/my_favorites.php')); ?>"><?php echo icon('heart', 16); ?> Favorites</a><?php endif; ?>
+                    <a href="<?php echo e(dashboard_url()); ?>"><?php echo icon('layout', 16); ?> Dashboard</a>
+                    <span class="nav-name"><?php echo e($_SESSION['name'] ?? 'User'); ?></span>
+                    <a class="btn btn-sm btn-outline-light" href="<?php echo e(url('logout.php')); ?>">Logout</a>
+                <?php else: ?>
+                    <a href="<?php echo e(url('login.php')); ?>">Login</a>
+                    <a class="btn btn-sm" href="<?php echo e(url('register.php')); ?>">Sign Up</a>
                 <?php endif; ?>
-
-
-                <!-- CUSTOMER FAVORITES -->
-
-                <?php if (
-                    isset($_SESSION['role']) &&
-                    $_SESSION['role'] === "customer"
-                ): ?>
-
-                    <a href="/connectzw/customer/my_favorites.php">
-                        ❤️ Favorites
-                    </a>
-
-                    <a href="/connectzw/customer/my_reviews.php">
-                        ⭐ My Reviews
-                    </a>
-
-                <?php endif; ?>
-
-
-                <!-- ADMIN -->
-
-                <?php if (
-                    isset($_SESSION['role']) &&
-                    $_SESSION['role'] === "admin"
-                ): ?>
-
-                    <a href="/connectzw/admin/dashboard.php">
-                        ⚙ Admin
-                    </a>
-
-                <?php endif; ?>
-
-
-                <!-- USER MENU -->
-
-                <div class="user-menu">
-
-                    <span>
-                        👤
-                        <?php
-                        echo htmlspecialchars(
-                            $_SESSION['name'] ?? 'User'
-                        );
-                        ?>
-                    </span>
-
-
-                    <a
-                        href="/connectzw/logout.php"
-                        class="logout-btn"
-                    >
-                        Logout
-                    </a>
-
-                </div>
-
-
-            <?php else: ?>
-
-
-                <!-- GUEST -->
-
-                <a href="/connectzw/login.php">
-                    Login
-                </a>
-
-
-                <a
-                    href="/connectzw/register.php"
-                    class="register-btn"
-                >
-                    Join ConnectZW
-                </a>
-
-
-            <?php endif; ?>
-
-
+            </div>
         </div>
-
     </div>
-
 </nav>
-
-
-<script>
-
-function toggleMenu() {
-
-    const menu = document.getElementById("navLinks");
-
-    menu.classList.toggle("active");
-
-}
-
-</script>
+<?php flash_render(); ?>

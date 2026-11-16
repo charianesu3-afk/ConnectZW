@@ -1,77 +1,12 @@
 <?php
+require_once __DIR__ . '/includes/config.php';
+require_login();
+require_post();
 
-session_start();
+$uid = (int)$_SESSION['user_id'];
+$bid = (int)($_POST['business_id'] ?? 0);
+db_exec('DELETE FROM favorites WHERE user_id = ? AND business_id = ?', 'ii', [$uid, $bid]);
+flash('success', 'Removed from your favorites.');
 
-include 'includes/config.php';
-
-
-
-if(!isset($_SESSION['user_id'])){
-
-
-header("Location: login.php");
-
-exit();
-
-
-}
-
-
-
-if(!isset($_GET['id'])){
-
-
-header("Location: my_favorites.php");
-
-exit();
-
-
-}
-
-
-
-$user_id=$_SESSION['user_id'];
-
-
-$business_id=mysqli_real_escape_string(
-$conn,
-$_GET['id']
-);
-
-
-
-
-
-$sql="DELETE FROM favorites
-
-WHERE user_id='$user_id'
-
-AND business_id='$business_id'";
-
-
-
-
-
-if(mysqli_query($conn,$sql)){
-
-
-
-header("Location: my_favorites.php");
-
-exit();
-
-
-
-}else{
-
-
-
-echo "Error removing favorite: ".mysqli_error($conn);
-
-
-
-}
-
-
-
-?>
+$next = ($_POST['next'] ?? '') === 'favorites' ? 'customer/my_favorites.php' : 'business_profile.php?id=' . $bid;
+redirect($next);

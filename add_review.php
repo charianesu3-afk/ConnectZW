@@ -1,115 +1,25 @@
 <?php
+require_once __DIR__ . '/includes/config.php';
+require_login();
+require_post();
 
-session_start();
+$uid     = (int)$_SESSION['user_id'];
+$bid     = (int)($_POST['business_id'] ?? 0);
+$rating  = (int)($_POST['rating'] ?? 0);
+$comment = trim($_POST['comment'] ?? '');
+$back    = 'business_profile.php?id=' . $bid;
 
-include 'includes/config.php';
+$biz = db_one('SELECT id, user_id FROM businesses WHERE id = ?', 'i', [$bid]);
 
-
-
-if(!isset($_SESSION['user_id'])){
-
-
-header("Location: login.php");
-
-exit();
-
+if (!$biz)                                  { flash('error', 'Business not found.'); redirect('search.php'); }
+if ((int)$biz['user_id'] === $uid)          { flash('error', "You can't review your own business."); redirect($back); }
+if ($rating < 1 || $rating > 5)             { flash('error', 'Please choose a rating from 1 to 5.'); redirect($back); }
+if (strlen($comment) < 5)                   { flash('error', 'Please write a short review (at least 5 characters).'); redirect($back); }
+if (strlen($comment) > 1000)                { flash('error', 'Your review is too long (max 1000 characters).'); redirect($back); }
+if (db_one('SELECT id FROM reviews WHERE user_id = ? AND business_id = ?', 'ii', [$uid, $bid])) {
+    flash('error', 'You have already reviewed this business.'); redirect($back);
 }
 
-
-
-
-if(!isset($_POST['business_id'])){
-
-
-header("Location: search.php");
-
-exit();
-
-}
-
-
-
-$user_id=$_SESSION['user_id'];
-
-
-$business_id=mysqli_real_escape_string(
-$conn,
-$_POST['business_id']
-);
-
-
-
-$rating=mysqli_real_escape_string(
-$conn,
-$_POST['rating']
-);
-
-
-
-$comment=mysqli_real_escape_string(
-$conn,
-$_POST['comment']
-);
-
-
-
-
-
-
-if($rating < 1 || $rating > 5){
-
-
-die("Invalid rating.");
-
-}
-
-
-
-if($comment==""){
-
-
-die("Please write a review.");
-
-}
-
-
-
-
-
-
-$sql="INSERT INTO reviews
-
-(business_id,user_id,rating,comment)
-
-VALUES
-
-('$business_id',
-'$user_id',
-'$rating',
-'$comment')";
-
-
-
-
-
-if(mysqli_query($conn,$sql)){
-
-
-header("Location: business_profile.php?id=".$business_id);
-
-exit();
-
-
-
-}else{
-
-
-echo "Error adding review: ".mysqli_error($conn);
-
-
-
-}
-
-
-
-?>
+db_exec('INSERT INTO reviews (business_id, user_id, rating, comment) VALUES (?, ?, ?, ?)', 'iiis', [$bid, $uid, $rating, $comment]);
+flash('success', 'Thank you! Your review has been posted.');
+redirect($back);

@@ -1,122 +1,42 @@
 <?php
+require_once __DIR__ . '/includes/config.php';
 
-include 'includes/config.php';
+$cats = db_all("SELECT c.id, c.category_name, COUNT(b.id) AS total
+    FROM categories c LEFT JOIN businesses b ON b.category_id = c.id
+    GROUP BY c.id, c.category_name ORDER BY c.category_name ASC");
 
 $pageTitle = "Categories | ConnectZW";
-
 include 'includes/header.php';
 include 'includes/navbar.php';
-
 ?>
 
-<section class="search-page">
-
-<div class="container">
-
-<h1>Business Categories</h1>
-
-<p>
-Browse businesses and services by category.
-</p>
-
-<br>
-
-<div class="business-grid">
-
-<?php
-
-$query = mysqli_query(
-    $conn,
-    "
-    SELECT 
-        categories.id,
-        categories.category_name,
-        COUNT(businesses.id) AS business_count
-
-    FROM categories
-
-    LEFT JOIN businesses
-    ON categories.id = businesses.category_id
-
-    GROUP BY categories.id, categories.category_name
-
-    ORDER BY categories.category_name ASC
-    "
-);
-
-if(mysqli_num_rows($query) > 0){
-
-    while($category = mysqli_fetch_assoc($query)){
-
-?>
-
-<div class="card">
-
-<h2>
-📂 <?php echo htmlspecialchars($category['category_name']); ?>
-</h2>
-
-<p>
-
-<?php echo $category['business_count']; ?>
-
-<?php
-
-if($category['business_count'] == 1){
-
-    echo " business";
-
-}else{
-
-    echo " businesses";
-
-}
-
-?>
-
-</p>
-
-<br>
-
-<a
-href="search.php?category=<?php echo $category['id']; ?>"
-class="btn"
->
-
-View Businesses
-
-</a>
-
+<div class="page-hero">
+    <div class="container"><h1>Browse Categories</h1><p>Find businesses and services by category.</p></div>
 </div>
 
-<?php
+<section>
+    <div class="container">
+        <div style="max-width:520px;margin-bottom:24px">
+            <input type="text" id="categorySearch" placeholder="Search for a category..." aria-label="Search categories">
+        </div>
 
-    }
+        <div class="cat-cards">
+            <?php if ($cats): foreach ($cats as $c): $img = category_image($c['category_name']); ?>
+                <a class="cat-card cat-filter" data-name="<?php echo e(strtolower($c['category_name'])); ?>" href="<?php echo e(url('search.php?category[]=' . (int)$c['id'])); ?>">
+                    <div class="bphoto">
+                        <?php if ($img): ?><img src="<?php echo e($img); ?>" alt="<?php echo e($c['category_name']); ?>" loading="lazy">
+                        <?php else: ?><div class="ph" style="--hue:<?php echo category_hue($c['category_name']); ?>"><?php echo category_icon($c['category_name'], 46); ?></div><?php endif; ?>
+                    </div>
+                    <div class="cc-body"><strong><?php echo e($c['category_name']); ?></strong>
+                        <small><?php echo (int)$c['total']; ?> <?php echo $c['total'] == 1 ? 'business' : 'businesses'; ?></small></div>
+                </a>
+            <?php endforeach; else: ?>
+                <div class="empty-box"><h3>No categories yet</h3></div>
+            <?php endif; ?>
+        </div>
 
-}else{
-
-?>
-
-<div class="empty-box">
-
-<h2>No Categories Available</h2>
-
-<p>
-There are currently no business categories available.
-</p>
-
-</div>
-
-<?php
-
-}
-
-?>
-
-</div>
-
-</div>
-
+        <div id="noCategories" class="empty-box" style="display:none;margin-top:20px"><?php echo icon('search', 36); ?><h3>No categories found</h3></div>
+    </div>
 </section>
 
 <?php include 'includes/footer.php'; ?>

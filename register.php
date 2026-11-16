@@ -1,287 +1,85 @@
 <?php
+require_once __DIR__ . '/includes/config.php';
 
-include 'includes/config.php';
+if (is_logged_in()) redirect('dashboard.php');
 
+$error = "";
+$name = $email = "";
+$role = "customer";
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    csrf_check();
+    $name     = trim($_POST['name'] ?? '');
+    $email    = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
+    $confirm  = $_POST['confirm'] ?? '';
+    $role     = $_POST['role'] ?? 'customer';
+
+    // Only these two roles can ever be chosen on the form. Admins are created manually.
+    if (!in_array($role, ['customer', 'business'], true)) $role = 'customer';
+
+    if ($name === '' || $email === '' || $password === '') {
+        $error = "Please fill in all fields.";
+    } elseif (strlen($name) > 100) {
+        $error = "Your name is too long.";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($email) > 150) {
+        $error = "Please enter a valid email address.";
+    } elseif (strlen($password) < 8) {
+        $error = "Your password must be at least 8 characters.";
+    } elseif ($password !== $confirm) {
+        $error = "The passwords do not match.";
+    } elseif (db_one('SELECT id FROM users WHERE email = ?', 's', [$email])) {
+        $error = "That email is already registered.";
+    } else {
+        $hash = password_hash($password, PASSWORD_DEFAULT);
+        db_exec('INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)', 'ssss', [$name, $email, $hash, $role]);
+        flash('success', 'Account created! You can now log in.');
+        redirect('login.php');
+    }
+}
 
 $pageTitle = "Register | ConnectZW";
-
-
-$message = "";
-
-
-
-if(isset($_POST['register'])){
-
-
-$name = mysqli_real_escape_string($conn,$_POST['name']);
-
-$email = mysqli_real_escape_string($conn,$_POST['email']);
-
-$password = $_POST['password'];
-
-$role = $_POST['role'];
-
-
-
-
-
-// Check existing email
-
-
-$check = mysqli_query(
-$conn,
-"SELECT id FROM users WHERE email='$email'"
-);
-
-
-
-if(mysqli_num_rows($check)>0){
-
-
-$message = "Email already registered.";
-
-
-}else{
-
-
-
-// Hash password
-
-$hashed_password = password_hash(
-$password,
-PASSWORD_DEFAULT
-);
-
-
-
-
-
-$sql = "INSERT INTO users
-(name,email,password,role)
-
-VALUES
-
-('$name','$email','$hashed_password','$role')";
-
-
-
-
-
-if(mysqli_query($conn,$sql)){
-
-
-$message = "Registration successful. You can now login.";
-
-
-}else{
-
-
-$message = "Registration failed. Please try again.";
-
-
-}
-
-
-
-}
-
-
-
-}
-
-
-
 include 'includes/header.php';
-
 include 'includes/navbar.php';
-
-
 ?>
 
-
-
-
-<section class="search-page">
-
-
-<div class="container">
-
-
-
-<div class="card">
-
-
-<h1>
-
-Create ConnectZW Account
-
-</h1>
-
-
-
-
-<?php if($message!=""){ ?>
-
-
-<p>
-
-<?php echo $message; ?>
-
-</p>
-
-
-<?php } ?>
-
-
-
-
-
-
-
-<form method="POST">
-
-
-
-<label>
-
-Full Name
-
-</label>
-
-
-<input 
-type="text"
-name="name"
-required
->
-
-<br><br>
-
-
-
-
-<label>
-
-Email Address
-
-</label>
-
-
-<input
-
-type="email"
-
-name="email"
-
-required
-
->
-
-
-<br><br>
-
-
-
-
-
-
-<label>
-
-Password
-
-</label>
-
-
-<input
-
-type="password"
-
-name="password"
-
-required
-
->
-
-
-<br><br>
-
-
-
-
-
-
-
-<label>
-
-Account Type
-
-</label>
-
-
-
-<select name="role">
-
-
-<option value="customer">
-
-Customer
-
-</option>
-
-
-
-<option value="business">
-
-Business Owner
-
-</option>
-
-
-</select>
-
-
-
-<br><br>
-
-
-
-<button type="submit" name="register">
-
-Create Account
-
-</button>
-
-
-
-
-</form>
-
-
-
-<p>
-
-Already have an account?
-
-<a href="login.php">
-
-Login here
-
-</a>
-
-</p>
-
-
-
+<div class="auth-wrap">
+    <div class="auth-card">
+        <h1>Create your account</h1>
+        <p class="sub">Join ConnectZW as a customer or business owner</p>
+
+        <?php if ($error !== ""): ?><div class="alert alert-error"><?php echo e($error); ?></div><?php endif; ?>
+
+        <form method="POST">
+            <?php echo csrf_field(); ?>
+            <div class="field">
+                <label for="name">Full name</label>
+                <input type="text" id="name" name="name" value="<?php echo e($name); ?>" maxlength="100" required>
+            </div>
+            <div class="field">
+                <label for="email">Email address</label>
+                <input type="email" id="email" name="email" value="<?php echo e($email); ?>" maxlength="150" required>
+            </div>
+            <div class="field">
+                <label for="password">Password <small class="muted">(8+ characters)</small></label>
+                <input type="password" id="password" name="password" minlength="8" required autocomplete="new-password">
+            </div>
+            <div class="field">
+                <label for="confirm">Confirm password</label>
+                <input type="password" id="confirm" name="confirm" minlength="8" required autocomplete="new-password">
+            </div>
+            <div class="field">
+                <label for="role">I am a...</label>
+                <select name="role" id="role">
+                    <option value="customer" <?php echo $role === 'customer' ? 'selected' : ''; ?>>Customer looking for businesses</option>
+                    <option value="business" <?php echo $role === 'business' ? 'selected' : ''; ?>>Business owner</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-block">Create account</button>
+        </form>
+
+        <p class="center muted mt">Already have an account? <a href="<?php echo e(url('login.php')); ?>">Log in</a></p>
+    </div>
 </div>
-
-
-</div>
-
-
-</section>
-
-
-
-
 
 <?php include 'includes/footer.php'; ?>

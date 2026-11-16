@@ -1,124 +1,13 @@
 <?php
+require_once __DIR__ . '/includes/config.php';
+require_login();
+require_post();
 
-session_start();
+$uid = (int)$_SESSION['user_id'];
+$bid = (int)($_POST['business_id'] ?? 0);
 
-include 'includes/config.php';
-
-
-
-if(!isset($_SESSION['user_id'])){
-
-
-header("Location: login.php");
-
-exit();
-
-
+if ($bid > 0 && db_one('SELECT id FROM businesses WHERE id = ?', 'i', [$bid])) {
+    db_exec('INSERT IGNORE INTO favorites (user_id, business_id) VALUES (?, ?)', 'ii', [$uid, $bid]);
+    flash('success', 'Saved to your favorites.');
 }
-
-
-
-
-if(!isset($_GET['id'])){
-
-
-header("Location: search.php");
-
-exit();
-
-
-}
-
-
-
-
-$user_id=$_SESSION['user_id'];
-
-
-$business_id=mysqli_real_escape_string(
-$conn,
-$_GET['id']
-);
-
-
-
-
-
-
-// Check if business exists
-
-
-$check_business=mysqli_query(
-$conn,
-
-"SELECT id FROM businesses WHERE id='$business_id'"
-
-);
-
-
-
-
-
-if(mysqli_num_rows($check_business)==0){
-
-
-die("Business not found.");
-
-}
-
-
-
-
-
-// Check existing favorite
-
-
-$check_favorite=mysqli_query(
-$conn,
-
-"SELECT id FROM favorites
-
-WHERE user_id='$user_id'
-
-AND business_id='$business_id'"
-
-);
-
-
-
-
-
-
-if(mysqli_num_rows($check_favorite)==0){
-
-
-
-mysqli_query(
-
-$conn,
-
-"INSERT INTO favorites
-
-(user_id,business_id)
-
-VALUES
-
-('$user_id','$business_id')"
-
-);
-
-
-
-}
-
-
-
-
-
-header("Location: business_profile.php?id=".$business_id);
-
-exit();
-
-
-
-?>
+redirect('business_profile.php?id=' . $bid);

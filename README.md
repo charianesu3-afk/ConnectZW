@@ -1,67 +1,24 @@
 # ConnectZW
 
-## Find Trusted Businesses and Services Near You
+**Discover. Connect. Grow. Zimbabwean Businesses.**
 
-ConnectZW is a web-based business directory and marketplace designed to help people discover trusted businesses and service providers in Zimbabwe.
-
-The platform allows customers to search for businesses, view business profiles, save their favourite businesses, and leave reviews. Business owners can create and manage their business listings, upload images, and monitor their business activity.
+A business directory for Zimbabwe built with PHP and MySQL.
 
 ## Features
+- **Customers:** search and filter (category, province, city, open now, verified), grid/list views, business pages with Call / WhatsApp / Email / Website buttons, reviews, favourites, customer dashboard
+- **Business owners:** listing editor (details, opening hours, services, photos), performance dashboard with views, contact clicks, calls and reviews
+- **Admins:** dashboard with charts, manage businesses (verify/delete), categories, users, reviews, blog, reports, newsletter subscribers, password settings
+- **Site:** blog, FAQ/help, terms, privacy, pricing, newsletter sign-up
+- **Security:** prepared statements, CSRF protection, escaped output, hashed passwords, safe image uploads
 
-### Customers
-- Browse businesses and services
-- Search for businesses
-- View detailed business profiles
-- Save businesses to favourites
-- Leave reviews and ratings
-- View personal favourites and reviews
+## Setup (XAMPP)
+1. Copy this folder to `C:\xampp\htdocs\connectzw`
+2. Start Apache and MySQL. In phpMyAdmin create a database named `connectzw` and import `database.sql` (existing installs upgrade themselves automatically)
+3. Check `includes/config.php`
+4. Open `http://localhost/connectzw`
+5. Sample data: visit `/seed_demo.php` once (remove later with `/seed_demo.php?remove=1`), then delete the file
+6. Make an admin: register, then run `UPDATE users SET role='admin' WHERE email='you@example.com';`
 
-### Business Owners
-- Create business listings
-- Edit business information
-- Upload multiple business images
-- Manage business listings
-- View business activity and statistics
-- Receive customer reviews
-
-### Administrators
-- Manage users
-- Manage businesses
-- Manage categories
-- Manage customer reviews
-- Control access to administrative features
-
-## Technologies Used
-
-- PHP
-- MySQL
-- HTML5
-- CSS3
-- JavaScript
-- XAMPP
-- Git & GitHub
-
-## Project Structure
-
-```text
-connectzw/
-│
-├── admin/
-├── assets/
-│   ├── css/
-│   ├── images/
-│   └── js/
-│
-├── business/
-├── customer/
-├── includes/
-├── uploads/
-│
-├── index.php
-├── login.php
-├── register.php
-├── search.php
-├── categories.php
-├── business_profile.php
-├── about.php
-└── contact.php
+## Photos
+- Hero photo: save a wide night-city photo as `assets/images/hero.jpg` (optional, a drawn skyline is used otherwise)
+- Category photos: see `assets/images/categories/README.txt`

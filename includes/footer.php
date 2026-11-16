@@ -1,182 +1,52 @@
-<?php
-
-$connectzw_url = "/connectzw/";
-
-?>
-
 <footer class="site-footer">
-
-    <div class="container">
-
-        <div class="footer-container">
-
-
-            <!-- =====================================
-                 BRAND
-            ====================================== -->
-
-            <div class="footer-section">
-
-                <h2>
-                    🌍 ConnectZW
-                </h2>
-
-                <p>
-                    Connecting customers with trusted Zimbabwean businesses.
-
-                    Discover services, compare options, and connect with
-                    businesses near you.
-                </p>
-
+    <div class="container footer-grid">
+        <div class="f-brand">
+            <a class="brand" href="<?php echo e(url('index.php')); ?>"><?php echo icon('pin', 24); ?> ConnectZW</a>
+            <p>Connecting Zimbabwean businesses with local customers. Grow local, build Zimbabwe.</p>
+            <div class="social">
+                <a href="#" aria-label="Facebook"><?php echo icon('facebook', 18); ?></a>
+                <a href="#" aria-label="Instagram"><?php echo icon('instagram', 18); ?></a>
+                <a href="#" aria-label="Twitter"><?php echo icon('twitter', 18); ?></a>
+                <a href="#" aria-label="LinkedIn"><?php echo icon('linkedin', 18); ?></a>
             </div>
-
-
-            <!-- =====================================
-                 QUICK LINKS
-            ====================================== -->
-
-            <div class="footer-section">
-
-                <h3>
-                    Quick Links
-                </h3>
-
-                <a href="<?php echo $connectzw_url; ?>">
-                    Home
-                </a>
-
-                <a href="<?php echo $connectzw_url; ?>business/view_businesses.php">
-                    Businesses
-                </a>
-
-                <a href="<?php echo $connectzw_url; ?>about.php">
-                    About Us
-                </a>
-
-                <a href="<?php echo $connectzw_url; ?>contact.php">
-                    Contact Us
-                </a>
-
-            </div>
-
-
-            <!-- =====================================
-                 BUSINESS OWNERS
-            ====================================== -->
-
-            <div class="footer-section">
-
-                <h3>
-                    For Businesses
-                </h3>
-
-                <a href="<?php echo $connectzw_url; ?>register.php">
-                    Register Business
-                </a>
-
-                <a href="<?php echo $connectzw_url; ?>login.php">
-                    Business Login
-                </a>
-
-                <p>
-                    Grow your business visibility and reach more customers
-                    online.
-                </p>
-
-            </div>
-
-
-            <!-- =====================================
-                 CONTACT
-            ====================================== -->
-
-            <div class="footer-section">
-
-                <h3>
-                    Contact
-                </h3>
-
-                <p>
-                    📍 Zimbabwe
-                </p>
-
-                <p>
-                    📧
-                    <a href="mailto:support@connectzw.com">
-                        support@connectzw.com
-                    </a>
-                </p>
-
-                <p>
-                    📞
-                    <a href="tel:+263771782348">
-                        +263 771 782 348
-                    </a>
-                </p>
-
-            </div>
-
-
-            <!-- =====================================
-                 SOCIAL MEDIA
-            ====================================== -->
-
-            <div class="footer-section">
-
-                <h3>
-                    Follow ConnectZW
-                </h3>
-
-                <p>
-                    Stay connected with updates and new businesses.
-                </p>
-
-                <p>
-                    Facebook — Coming Soon
-                </p>
-
-                <p>
-                    Instagram — Coming Soon
-                </p>
-
-                <p>
-                    LinkedIn — Coming Soon
-                </p>
-
-                <p>
-                    TikTok — Coming Soon
-                </p>
-
-            </div>
-
-
         </div>
-
-
-        <!-- =====================================
-             FOOTER BOTTOM
-        ====================================== -->
-
-        <div class="footer-bottom">
-
-            <hr>
-
-            <p>
-                © <?php echo date("Y"); ?>
-                ConnectZW. All Rights Reserved.
-            </p>
-
-            <p>
-                Connecting Zimbabwean Businesses With Customers.
-            </p>
-
+        <div>
+            <h4>Quick Links</h4>
+            <a href="<?php echo e(url('index.php')); ?>">Home</a>
+            <a href="<?php echo e(url('about.php')); ?>">About Us</a>
+            <a href="<?php echo e(url('contact.php')); ?>">Contact Us</a>
+            <a href="<?php echo e(url('blog.php')); ?>">Blog</a>
+            <a href="<?php echo e(url('faq.php')); ?>">FAQs</a>
         </div>
-
+        <div>
+            <h4>For Businesses</h4>
+            <a href="<?php echo e(url('register.php')); ?>">List Your Business</a>
+            <a href="<?php echo e(url('dashboard.php')); ?>">Business Dashboard</a>
+            <a href="<?php echo e(url('blog.php')); ?>">Resources</a>
+            <a href="<?php echo e(url('pricing.php')); ?>">Pricing</a>
+        </div>
+        <div>
+            <h4>Support</h4>
+            <a href="<?php echo e(url('faq.php')); ?>">Help Center</a>
+            <a href="<?php echo e(url('terms.php')); ?>">Terms of Use</a>
+            <a href="<?php echo e(url('privacy.php')); ?>">Privacy Policy</a>
+            <a href="<?php echo e(url('contact.php')); ?>">Contact Support</a>
+        </div>
+        <div class="f-news">
+            <h4>Subscribe to our newsletter</h4>
+            <p>Get the latest updates and tips for your business.</p>
+            <form method="POST" action="<?php echo e(url('subscribe.php')); ?>" class="news-form">
+                <?php echo csrf_field(); ?>
+                <input type="email" name="email" placeholder="Enter your email" required aria-label="Email address">
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
     </div>
-
+    <div class="container footer-bottom">
+        <span>© <?php echo date('Y'); ?> ConnectZW. All rights reserved.</span>
+        <span class="proud">Proudly Zimbabwean <?php echo flag_zw(20); ?></span>
+    </div>
 </footer>
-
-
+<script src="<?php echo e(url('assets/js/main.js')); ?>?v=3"></script>
 </body>
-
 </html>
